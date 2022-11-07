@@ -1,8 +1,5 @@
 import React, { useState } from "react";
 
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
 //create your first component
 const Home = () => {
 	
@@ -10,8 +7,13 @@ const Home = () => {
 
 
 	return (
-		<div className="text-center">
-		</div>
+			<div className="semaforo">
+				<div className="luces">
+					<button className="circulo rojo"></button>
+					<button className="circulo amarillo"></button>
+					<button className="circulo verde"></button>
+				</div>
+			</div>
 	);
 };
 
