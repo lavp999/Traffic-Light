@@ -19,7 +19,6 @@
     margin-right: auto;
     margin-top: 2px;
     border-radius: 15px;
-    border: 1px solid rgb(9, 37, 248);
 }
 
 .luces{
@@ -46,4 +45,8 @@
 
 .verde {
     background: green;
+}
+
+.brillo{
+    box-shadow: 0 0 40px;
 }
