@@ -4,6 +4,7 @@ import reactDom from "react-dom";
 //create your first component
 const Home = () => {
 
+	let cambioCada = 45;
 
 	let colores ={
 		color: ["rojo", "amarillo", "verde"],
@@ -25,13 +26,6 @@ const Home = () => {
 		colores.activo = [false, false, false];
 	}
 
-	function cambiaManual(color){
-		clearInterval(intervalo);
-		setContador(0);
-		activa(color);
-	}
-
-
 	function activa(color){
 		const posicion = colores.color.indexOf(color);
 		desactiva();
@@ -41,14 +35,22 @@ const Home = () => {
 		colores.activo[posicion] = true;
 	}
 	
-	function cambioAutomatico(){
+	function cambiaManual(color){
+		clearInterval(intervalo);
+		setContador(0);
+		activa(color);
+	}
+
+
+//	function cambioAutomatico(){
+	const cambioAutomatico = () =>{
 		if(contador > 0){
 			setContador(contador - 1);
 			console.log("contador sumando: ", contador);
 		}else{
-			setContador(45);
-			console.log("contador Inicializado: ", contador);
-			const siguienteColor = (colores.color[colores.activo.indexOf(true)] == colores.color.length -1 ? 0 : colores.color[colores.activo.indexOf(true)]);
+			setContador(cambioCada);
+			console.log("contador Inicializado: ", contador, "a true: ", colores.activo.indexOf(true), "Que es:", colores.color[colores.activo.indexOf(true)], colores.color.length);
+			const siguienteColor = colores.color[(colores.activo.indexOf(true) == (colores.color.length - 1) ? 0 : colores.activo.indexOf(true)+1)];
 			console.log(siguienteColor);
 			activa(siguienteColor);
 		}
