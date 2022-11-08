@@ -46,7 +46,7 @@ const Home = () => {
 			setContador(contador - 1);
 			console.log("contador sumando: ", contador);
 		}else{
-			setContador(10);
+			setContador(45);
 			console.log("contador Inicializado: ", contador);
 			const siguienteColor = (colores.color[colores.activo.indexOf(true)] == colores.color.length -1 ? 0 : colores.color[colores.activo.indexOf(true)]);
 			console.log(siguienteColor);
