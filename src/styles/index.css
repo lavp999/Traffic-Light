@@ -1,23 +1,27 @@
 
 /* 
-
     You can write your own styles here...
-    
-    
+        
     ...Or you can use the import command to include 
     other sylesheets into your bunde as well, e.j:
     
     import 'relative/path/to/stylesheet.scss';
-
 */
+
+.borde{
+    border: 1px solid red;
+}
+
+.centra{
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2px;
+}   
 
 .semaforo{
     width: 70px; 
     height: auto; 
     background: #428bca;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 2px;
     border-radius: 15px;
 }
 
@@ -37,16 +41,35 @@
 
 .rojo {
     background: red;
+    border: 1px solid rgb(214, 33, 33);
 }
 
 .amarillo {
     background: yellow;
+    border: 1px solid rgb(220, 210, 24);
 }
 
 .verde {
     background: green;
+    border: 1px solid rgb(12, 184, 75);
 }
 
 .brillo{
     box-shadow: 0 0 40px;
+    border: 1px solid white;
+}
+
+.boton{
+    background-color: #2d30e0;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 16px;
+    width: 70px; 
+    height: 30px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

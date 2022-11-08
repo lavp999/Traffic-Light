@@ -4,43 +4,80 @@ import reactDom from "react-dom";
 //create your first component
 const Home = () => {
 
-	const colores =[
-		{rojo: "circulo rojo", verde: "circulo verde", amarillo: "circulo amarillo"},
-		{rojo: "circulo rojo brillo", verde: "circulo verde brillo", amarillo: "circulo amarillo brillo"}
-	]
-	
-	const [ semRojo, setSemRojo] = useState(colores[0].rojo);
-	const [ semAmarillo, setSemAmarillo] = useState(colores[0].amarillo);
-	const [ semVerde, setSemVerde] = useState(colores[0].verde);
+
+	let colores ={
+		color: ["rojo", "amarillo", "verde"],
+		estiloNormal: ["circulo rojo", "circulo amarillo", "circulo verde"],
+		estiloIluminado: ["circulo rojo brillo", "circulo amarillo brillo", "circulo verde brillo"],
+		activo: [true, false, false]
+	}
+
+	const [ intervalo, setIntervalo] = useState();
+	const [ contador, setContador] = useState(0);
+	const [ semRojo, setSemRojo] = useState(colores.estiloIluminado[colores.color.indexOf("rojo")]);
+	const [ semAmarillo, setSemAmarillo] = useState(colores.estiloNormal[colores.color.indexOf("amarillo")]);
+	const [ semVerde, setSemVerde] = useState(colores.estiloNormal[colores.color.indexOf("verde")]);
 
 	function desactiva(){
-		setSemRojo(colores[0].rojo);
-		setSemAmarillo(colores[0].amarillo);
-		setSemVerde(colores[0].verde);
+		setSemRojo(colores.estiloNormal[colores.color.indexOf("rojo")]);
+		setSemAmarillo(colores.estiloNormal[colores.color.indexOf("amarillo")]);
+		setSemVerde(colores.estiloNormal[colores.color.indexOf("verde")]);
+		colores.activo = [false, false, false];
+	}
+
+	function cambiaManual(color){
+		clearInterval(intervalo);
+		setContador(0);
+		activa(color);
 	}
 
 
-	const activaRojo = (evento) =>{
+	function activa(color){
+		const posicion = colores.color.indexOf(color);
 		desactiva();
-		setSemRojo(colores[1].rojo);
+		if (color == "rojo") 		setSemRojo(colores.estiloIluminado[posicion]);
+		else if(color == "verde")	setSemVerde(colores.estiloIluminado[posicion]);
+		else 						setSemAmarillo(colores.estiloIluminado[posicion]);
+		colores.activo[posicion] = true;
+	}
+	
+	function cambioAutomatico(){
+		if(contador > 0){
+			setContador(contador - 1);
+			console.log("contador sumando: ", contador);
+		}else{
+			setContador(10);
+			console.log("contador Inicializado: ", contador);
+			const siguienteColor = (colores.color[colores.activo.indexOf(true)] == colores.color.length -1 ? 0 : colores.color[colores.activo.indexOf(true)]);
+			console.log(siguienteColor);
+			activa(siguienteColor);
+		}
 	}
 
-	const activaAmarillo = (evento) =>{
-		setSemAmarillo(colores[1].amarillo);
+	const asignaIntervalo = () => {
+		setContador(0);
+		setIntervalo(setInterval(cambioAutomatico, 1000));
+		// cambioAutomatico();
 	}
 
-	const activaVerde = (evento) =>{
-		setSemVerde(colores[1].verde);
-	}
 
 	return (
-			<div className="semaforo">
+		<>
+			<div className="centra semaforo">
 				<div className="luces">
-					<button className={semRojo} onClick={activaRojo}></button>
-					<button className={semAmarillo} onClick={activaAmarillo}></button>
-					<button className={semVerde} onClick={activaVerde}></button>
+					<button className={semRojo} onClick={()=> {cambiaManual("rojo")}}>{contador <= 0 ? "" : contador}</button>
+					<button className={semAmarillo} onClick={()=> {cambiaManual("amarillo")}}>{contador <= 0 ? "" : contador}</button>
+					<button className={semVerde} onClick={()=> {cambiaManual("verde")}}>{contador <= 0 ? "" : contador}</button>
 				</div>
 			</div>
+			{
+			<div className="centra" hidden={contador != 0}>
+				<div>
+					<button className="centra boton" onClick={asignaIntervalo}><i className="fas fa-history"></i></button>
+				</div>
+			</div>
+			}
+		</>
 	);
 };
 
