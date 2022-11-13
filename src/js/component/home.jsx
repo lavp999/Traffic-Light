@@ -5,7 +5,7 @@ import { resolvePath } from "react-router";
 //create your first component
 const Home = () => {
 
-	let cambioCada = 45;
+	let cambioCada = 10;
 
 	let colores ={
 		color: ["rojo", "amarillo", "verde", "rosa"],
@@ -25,17 +25,20 @@ const Home = () => {
 		setSemRojo(colores.estiloNormal[colores.color.indexOf("rojo")]);
 		setSemAmarillo(colores.estiloNormal[colores.color.indexOf("amarillo")]);
 		setSemVerde(colores.estiloNormal[colores.color.indexOf("verde")]);
-		colores.activo = [false, false, false];
+		setSemRosa(colores.estiloNormal[colores.color.indexOf("rosa")]);
+		colores.activo = [false, false, false, false];
 	}
 
 	function activa(color){
 		const posicion = colores.color.indexOf(color);
 		clearInterval(intervalo);
 		desactiva();
-		if (color == "rojo") 		setSemRojo(colores.estiloIluminado[posicion]);
-		else if(color == "verde")	setSemVerde(colores.estiloIluminado[posicion]);
-		else 						setSemAmarillo(colores.estiloIluminado[posicion]);
+		if     (color == "rojo") 	 setSemRojo(colores.estiloIluminado[posicion]);
+		else if(color == "verde")	 setSemVerde(colores.estiloIluminado[posicion]);
+		else if(color == "amarillo") setSemAmarillo(colores.estiloIluminado[posicion]);
+		else 						 setSemRosa(colores.estiloIluminado[posicion]);
 		colores.activo[posicion] = true;
+		console.log(colores.activo[posicion], posicion);
 	}
 	
 	function cambiaManual(color){
@@ -45,9 +48,11 @@ const Home = () => {
 	}
 
 	const cambiaManual2 = (evento)=>{
-		console.log("Hola"); 
-		console.log(evento.target.name); 
-		colores.activo[3] = true;
+		const posicion = colores.color.indexOf(evento.target.name);
+
+		clearInterval(intervalo);
+		setContador(0);
+		activa(evento.target.name);		
 	}
 
 
@@ -76,11 +81,15 @@ const Home = () => {
 		<>
 			<div className="centra semaforo">
 				<div className="luces">
-					<button name="rojo" className={semRojo} onClick={()=> {cambiaManual("rojo")}}></button>
+					<button name="circulo rojo" className={semRojo} onClick={()=> {cambiaManual("rojo")}}></button>
 					<button name={colores.color[1]} className={semAmarillo} onClick={()=> {cambiaManual("amarillo")}}></button>
 					<button name={colores.color[2]} className={semVerde} onClick={()=> {cambiaManual("verde")}}></button>
-					<button name={colores.color[3]} className={`circulo ${colores.color[3]} ${colores.activo[3] ? "brillo" : "" }`} onClick={cambiaManual2}></button>
-				</div>
+					{/*<button name={colores.color[3]} className={`circulo ${colores.color[3]} ${colores.activo[3] ? "brillo" : "" }`} onClick={cambiaManual2}></button>*/}
+					<button name={colores.color[3]} className={semRosa} onClick={cambiaManual2}></button>
+
+
+					{console.log({`circulo ${colores.color[3]} ${colores.activo[3] ? "brillo" : "" }`})}
+					</div>
 			</div>
 			{
 			<div className="centra">
