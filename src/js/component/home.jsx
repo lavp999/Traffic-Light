@@ -14,7 +14,6 @@ const Home = () => {
 		semLucesHtml(colores.color.map((elemento, index)=>{
 				return <button id={index} name={elemento} className={colores.activo[index] ? colores.normal[index] : colores.normal[index] } onClick={activa}></button>;
 		}));
-
 	}
 
 	function desactiva(){ 
