@@ -1,3 +1,4 @@
+import { element } from "prop-types";
 import React, { useState } from "react";
 import reactDom from "react-dom";
 import { resolvePath } from "react-router";
@@ -7,12 +8,11 @@ const Home = () => {
 
 	let cambioCada = 10;
 
-	let colores ={
-		color: ["rojo", "amarillo", "verde", "rosa"],
-		estiloNormal: ["circulo rojo", "circulo amarillo", "circulo verde", "circulo rosa"],
-		estiloIluminado: ["circulo rojo brillo", "circulo amarillo brillo", "circulo verde brillo", "circulo rosa brillo"],
-		activo: [true, false, false, false]
-	}
+	const [colores, semColores] = useState({color: ["rojo", "amarillo", "verde", "rosa"],
+											estiloNormal: ["circulo rojo", "circulo amarillo", "circulo verde", "circulo rosa"],
+											estiloIluminado: ["circulo rojo brillo", "circulo amarillo brillo", "circulo verde brillo", "circulo rosa brillo"],
+											activo: [true, false, false, false]
+										   });
 
 	const [ intervalo, setIntervalo] = useState();
 	const [ contador, setContador] = useState(0);
@@ -26,7 +26,7 @@ const Home = () => {
 		setSemAmarillo(colores.estiloNormal[colores.color.indexOf("amarillo")]);
 		setSemVerde(colores.estiloNormal[colores.color.indexOf("verde")]);
 		setSemRosa(colores.estiloNormal[colores.color.indexOf("rosa")]);
-		colores.activo = [false, false, false, false];
+		semColores(colores, colores.activo = [false, false, false, false]); 
 	}
 
 	function activa(color){
@@ -37,8 +37,8 @@ const Home = () => {
 		else if(color == "verde")	 setSemVerde(colores.estiloIluminado[posicion]);
 		else if(color == "amarillo") setSemAmarillo(colores.estiloIluminado[posicion]);
 		else 						 setSemRosa(colores.estiloIluminado[posicion]);
-		colores.activo[posicion] = true;
-		console.log(colores.activo[posicion], posicion);
+		semColores(colores, colores.activo[posicion] = true);
+		console.log(color, colores.activo[posicion], posicion);
 	}
 	
 	function cambiaManual(color){
@@ -48,8 +48,6 @@ const Home = () => {
 	}
 
 	const cambiaManual2 = (evento)=>{
-		const posicion = colores.color.indexOf(evento.target.name);
-
 		clearInterval(intervalo);
 		setContador(0);
 		activa(evento.target.name);		
@@ -76,20 +74,16 @@ const Home = () => {
 		// cambioAutomatico();
 	}
 
-
 	return (
 		<>
 			<div className="centra semaforo">
 				<div className="luces">
-					<button name="circulo rojo" className={semRojo} onClick={()=> {cambiaManual("rojo")}}></button>
-					<button name={colores.color[1]} className={semAmarillo} onClick={()=> {cambiaManual("amarillo")}}></button>
-					<button name={colores.color[2]} className={semVerde} onClick={()=> {cambiaManual("verde")}}></button>
-					{/*<button name={colores.color[3]} className={`circulo ${colores.color[3]} ${colores.activo[3] ? "brillo" : "" }`} onClick={cambiaManual2}></button>*/}
-					<button name={colores.color[3]} className={semRosa} onClick={cambiaManual2}></button>
-
-
-					{console.log({`circulo ${colores.color[3]} ${colores.activo[3] ? "brillo" : "" }`})}
-					</div>
+					{/*colores.color.map((elemento, index)=>{`<button id=${index} name=${elemento} className=circulo ${elemento} ${colores.activo[index] ? "brillo" : "" } onClick=${cambiaManual2}></button>`})*/}
+					<button name={colores.color[0]} className={`circulo ${colores.color[0]} ${colores.activo[0] ? "brillo" : "" }`} onClick={cambiaManual2}></button>
+					<button name={colores.color[1]} className={`circulo ${colores.color[1]} ${colores.activo[1] ? "brillo" : "" }`} onClick={cambiaManual2}></button>
+					<button name={colores.color[2]} className={`circulo ${colores.color[2]} ${colores.activo[2] ? "brillo" : "" }`} onClick={cambiaManual2}></button>
+					<button name={colores.color[3]} className={`circulo ${colores.color[3]} ${colores.activo[3] ? "brillo" : "" }`} onClick={cambiaManual2}></button>
+				</div>
 			</div>
 			{
 			<div className="centra">
